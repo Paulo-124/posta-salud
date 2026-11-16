@@ -5,20 +5,20 @@ namespace Database\Factories;
 use App\Models\Paciente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Paciente>
- */
 class PacienteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Paciente::class;
+
     public function definition(): array
     {
         return [
-            //
+            'dni' => fake()->unique()->numerify('########'),
+            'nombres' => fake()->firstName(),
+            'apellidos' => fake()->lastName() . ' ' . fake()->lastName(),
+            'fecha_nacimiento' => fake()->date('Y-m-d', '2005-12-31'),
+            'sexo' => fake()->randomElement(['M', 'F']),
+            'telefono' => fake()->numerify('9########'),
+            'direccion' => fake()->address(),
         ];
     }
 }
