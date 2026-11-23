@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('titulo', 'Ficha del paciente')
@@ -7,6 +8,10 @@
 
     @if (session('ok'))
         <p class="mensaje-exito">{{ session('ok') }}</p>
+    @endif
+
+    @if (session('error'))
+        <p class="mensaje-error">{{ session('error') }}</p>
     @endif
 
     <div class="ficha-paciente">
@@ -21,6 +26,14 @@
 
     <div class="acciones">
         <a href="{{ route('pacientes.edit', $paciente) }}">Editar paciente</a>
+
+        <form method="POST" action="{{ route('pacientes.destroy', $paciente) }}"
+              onsubmit="return confirm('¿Eliminar a este paciente?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="secondary">Eliminar</button>
+        </form>
+
         <a href="{{ route('pacientes.index') }}">Volver al listado</a>
     </div>
 @endsection
