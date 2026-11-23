@@ -8,7 +8,13 @@
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-</head>
+    <style>
+        .aviso-ok    { border-left: 6px solid #2f7d52; }
+        .aviso-error { border-left: 6px solid #b3261e; }
+        .acciones    { display: flex; gap: 1rem; align-items: center; }
+    </style>
+    </head>
+
 <body>
 
     <header class="container">
@@ -19,7 +25,7 @@
 
             <ul>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="#">Pacientes</a></li>
+                <li><a href="{{ route('pacientes.index') }}">Pacientes</a></li>
                 <li><a href="#">Personal médico</a></li>
                 <li><a href="#">Citas</a></li>
                 <li><a href="#">Atenciones</a></li>
@@ -27,9 +33,18 @@
         </nav>
     </header>
 
+    
     <main class="container">
+        @if (session('ok'))
+        <article class="aviso-ok">{{ session('ok') }}</article>
+        @endif
+        @if (session('error'))
+        <article class="aviso-error">{{ session('error') }}</article>
+        @endif
+
         @yield('contenido')
     </main>
+
 
     <footer class="container">
         <small>Sistema Web de la Posta de Salud Comunitaria</small>
