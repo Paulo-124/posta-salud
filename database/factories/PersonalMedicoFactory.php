@@ -16,13 +16,7 @@ class PersonalMedicoFactory extends Factory
             'dni' => fake()->unique()->numerify('########'),
             'nombres' => fake()->firstName(),
             'apellidos' => fake()->lastName() . ' ' . fake()->lastName(),
-            'especialidad' => fake()->randomElement([
-                'Medicina General',
-                'Pediatría',
-                'Odontología',
-                'Enfermería',
-                'Obstetricia',
-            ]),
+            'especialidad' => fake()->randomElement(PersonalMedico::ESPECIALIDADES),
             'colegiatura' => fake()->unique()->numerify('#####'),
             'activo' => true,
         ];

@@ -23,6 +23,11 @@ class PersonalMedico extends Model
         'activo',
     ];
 
+    public const ESPECIALIDADES = [
+        'Medicina general', 'Obstetricia', 'Enfermería',
+        'Odontología', 'Pediatría',
+    ];
+
     protected function casts(): array
     {
         return [
