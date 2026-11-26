@@ -87,4 +87,28 @@ class PersonalMedicoController extends Controller
             ->route('personal-medico.show', $personalMedico)
             ->with('ok', 'Datos actualizados correctamente.');
     }
+
+    public function cambiarEstado(PersonalMedico $personalMedico)
+    {
+        // Si se va a desactivar, verificar que no tenga citas futuras programadas
+        if ($personalMedico->activo) {
+            $citasPendientes = $personalMedico->citas()
+                ->where('estado', 'programada')
+                ->where('fecha_hora', '>=', now())
+                ->count();
+
+            if ($citasPendientes > 0) {
+                return back()->with('error',
+                    "No se puede desactivar: el profesional tiene {$citasPendientes} cita(s) programada(s) pendiente(s).");
+            }
+        }
+
+        $personalMedico->update(['activo' => ! $personalMedico->activo]);
+
+        $mensaje = $personalMedico->activo
+            ? 'Profesional reactivado correctamente.'
+            : 'Profesional desactivado correctamente.';
+
+        return back()->with('ok', $mensaje);
+    }
 }

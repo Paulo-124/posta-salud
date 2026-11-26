@@ -65,6 +65,15 @@
                         <td class="acciones">
                             <a href="{{ route('personal-medico.show', $medico) }}">Ver</a>
                             <a href="{{ route('personal-medico.edit', $medico) }}">Editar</a>
+
+                            <form method="POST" action="{{ route('personal-medico.estado', $medico) }}" style="margin: 0;">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="outline {{ $medico->activo ? 'contrast' : '' }}"
+                                    style="padding: 0.25rem 0.6rem; font-size: 0.85rem;">
+                                    {{ $medico->activo ? 'Desactivar' : 'Reactivar' }}
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

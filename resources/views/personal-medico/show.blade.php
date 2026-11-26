@@ -7,6 +7,15 @@
         <h1>{{ $medico->apellidos }}, {{ $medico->nombres }}</h1>
         <div class="acciones">
             <a href="{{ route('personal-medico.edit', $medico) }}" role="button">Editar datos</a>
+
+            <form method="POST" action="{{ route('personal-medico.estado', $medico) }}" style="margin: 0;">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="outline {{ $medico->activo ? 'contrast' : '' }}">
+                    {{ $medico->activo ? 'Desactivar' : 'Reactivar' }}
+                </button>
+            </form>
+
             <a href="{{ route('personal-medico.index') }}" role="button" class="secondary">Volver</a>
         </div>
     </div>
