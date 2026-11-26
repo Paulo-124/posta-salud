@@ -37,12 +37,18 @@ class PersonalMedicoController extends Controller
 
     public function create()
     {
-        //
+        $especialidades = PersonalMedico::ESPECIALIDADES;
+
+        return view('personal-medico.create', compact('especialidades'));
     }
 
     public function store(StorePersonalMedicoRequest $request)
     {
-        //
+        $medico = PersonalMedico::create($request->validated());
+
+        return redirect()
+            ->route('personal-medico.show', $medico)
+            ->with('ok', 'Profesional registrado correctamente.');
     }
 
     public function show(PersonalMedico $personalMedico)
