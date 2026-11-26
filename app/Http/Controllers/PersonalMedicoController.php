@@ -53,7 +53,20 @@ class PersonalMedicoController extends Controller
 
     public function show(PersonalMedico $personalMedico)
     {
-        //
+        $personalMedico->loadCount('citas');
+
+        $proximasCitas = $personalMedico->citas()
+            ->with('paciente')
+            ->where('estado', 'programada')
+            ->where('fecha_hora', '>=', now())
+            ->orderBy('fecha_hora')
+            ->limit(10)
+            ->get();
+
+        return view('personal-medico.show', [
+            'medico'        => $personalMedico,
+            'proximasCitas' => $proximasCitas,
+        ]);
     }
 
     public function edit(PersonalMedico $personalMedico)
