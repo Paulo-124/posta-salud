@@ -71,11 +71,20 @@ class PersonalMedicoController extends Controller
 
     public function edit(PersonalMedico $personalMedico)
     {
-        //
+        $especialidades = PersonalMedico::ESPECIALIDADES;
+
+        return view('personal-medico.edit', [
+            'medico'         => $personalMedico,
+            'especialidades' => $especialidades,
+        ]);
     }
 
     public function update(UpdatePersonalMedicoRequest $request, PersonalMedico $personalMedico)
     {
-        //
+        $personalMedico->update($request->validated());
+
+        return redirect()
+            ->route('personal-medico.show', $personalMedico)
+            ->with('ok', 'Datos actualizados correctamente.');
     }
 }
